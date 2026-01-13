@@ -29,3 +29,4 @@ if __name__ == "__main__":
 本人是科研废物，不适合写论文。
 
 [GitHub](https://github.com)
+[`abc123@163.com`](mailto:mashiro@mashiro.com.cn)
