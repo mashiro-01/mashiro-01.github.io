@@ -4,7 +4,6 @@
 
 ## 代码块
 ```markdown
-```python
 # 示例Python代码
 def main():
     print("Hello README!")
