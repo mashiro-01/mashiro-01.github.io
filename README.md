@@ -26,10 +26,10 @@ if __name__ == "__main__":
 3. 无需额外配置环境
 
 ## 说明
-本人是科研废物，不适合写论文。<br>
+本人是科研废物，不适合写论文。  
 请大家欣赏《寻找失去的未来》里面的古川结
 
-![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)
-<img src="[图片地址](./sakurarain/image/11.png)" width="100" alt="何意味">
+![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)  
+<img src="[图片地址](./sakurarain/image/11.png)" width="100" alt="何意味">  
 [`GitHub`](https://github.com)  
-[`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)<br>
+[`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)  
