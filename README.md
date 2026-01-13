@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
 ## 说明
 本人是科研废物，不适合写论文。
+请大家欣赏《寻找失去的未来》里面的古川结
 
 ![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)<br>
 [`GitHub`](https://github.com)<br>
