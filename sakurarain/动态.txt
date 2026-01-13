@@ -1,0 +1,10 @@
+var titlekey1 = "[  ]";
+var titlekey2 = "[1]";
+var flag = 1;
+function titleChange(){
+flag = flag^1
+if (flag = 0){
+document.title = titlekey1;}
+else{
+document.title = titlekey2;}
+}
