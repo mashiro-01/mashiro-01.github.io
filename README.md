@@ -28,5 +28,7 @@ if __name__ == "__main__":
 ## 说明
 本人是科研废物，不适合写论文。
 
+[sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)
+
 [`GitHub`](https://github.com)
 [`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)
