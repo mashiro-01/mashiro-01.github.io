@@ -30,6 +30,6 @@ if __name__ == "__main__":
 请大家欣赏《寻找失去的未来》里面的古川结
 
 ![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)
-<img src="[图片地址](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/11.png)" width="100" alt="何意味"><br>
-[`GitHub`](https://github.com)<br>
+<img src="[图片地址](./sakurarain/image/11.png)" width="100" alt="何意味">
+[`GitHub`](https://github.com)  
 [`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)<br>
