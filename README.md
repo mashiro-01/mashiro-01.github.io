@@ -28,5 +28,5 @@ if __name__ == "__main__":
 ## 说明
 本人是科研废物，不适合写论文。
 
-[GitHub](https://github.com)
-[`abc123@163.com`](mailto:mashiro@mashiro.com.cn)
+[`GitHub`](https://github.com)
+[`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)
