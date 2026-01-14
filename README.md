@@ -28,7 +28,7 @@ if __name__ == "__main__":
 | 硬件 | 无版本要求 | 安装命令 |
 |------|----------|----------|
 | 樱森杏子 | ≥ 3.8 | `pip install sakuramori==3.8` |
-| 夏日重现 | ≥ 2.0 | `pip install xrcx>=2.0` |
+| 夏天すとら | ≥ 2.0 | `pip install kaama>=2.0` |
 | 椎名真白 | ≥ 1.6.0 | `pip install mashiro` |
 
 ## 说明
