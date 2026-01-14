@@ -8,7 +8,7 @@
 # 示例Python代码
 def main():
     print("Hello README!")
-    a = 1 + 2
+    a = 1 + 1
     return a
 
 if __name__ == "__main__":
@@ -25,17 +25,17 @@ if __name__ == "__main__":
 2. 直接运行.exe即可使用
 3. 无需额外配置环境  
 
-| 软件 | 版本要求 | 安装命令 |
+| 硬件 | 无版本要求 | 安装命令 |
 |------|----------|----------|
-| Python | ≥ 3.8 | `pip install python==3.8` |
-| PyTorch | ≥ 2.0 | `pip install torch>=2.0` |
-| MMCV | ≥ 1.6.0 | `pip install mmcv-full` |
+| 樱森杏子 | ≥ 3.8 | `pip install sakuramori==3.8` |
+| 夏日重现 | ≥ 2.0 | `pip install xrcx>=2.0` |
+| 椎名真白 | ≥ 1.6.0 | `pip install mashiro` |
 
 ## 说明
 本人是科研废物，不适合写论文。  
 请大家欣赏《寻找失去的未来》里面的古川结
 
 ![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)  
-<img src="./sakurarain/image/11.png" width="500" alt="何意味">  
+<img src="./sakurarain/image/11.png" width="1000" alt="何意味">  
 [`GitHub`](https://github.com)  
 [`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)  
