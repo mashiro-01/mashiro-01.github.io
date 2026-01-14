@@ -1,6 +1,7 @@
 # mashiro的个人小站
 ## 项目简介
-这是一个基础的人，实现了基础的核心功能，适合新手入门和简单场景使用。
+这是一个基础的人，实现了基础的核心功能，适合新手入门和简单场景使用。  
+神人收容所，研究神明的实验者，AI的终结者
 
 ## 代码块
 ```markdown
@@ -33,7 +34,8 @@ if __name__ == "__main__":
 
 ## 说明
 本人是科研废物，不适合写论文。  
-请大家欣赏《寻找失去的未来》里面的古川结
+请大家欣赏《寻找失去的未来》里面的古川结(人设是具身智能)  
+还有《在月之彼岸邂逅》的佐仓雨音(人设是乔布斯？的女儿)  
 
 ![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)  
 <img src="./sakurarain/image/11.png" width="1000" alt="何意味">  
