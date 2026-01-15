@@ -1,32 +1,85 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>IIS Windows</title>
-<style type="text/css">
-<!--
-body {
-	color:#000000;
-	background-color:#0072C6;
-	margin:0;
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="image/icon.png">
+<!--<title>sakura rain</title>-->
+<script type="text/javascript">
+var titlekey1 = "sakura";
+var titlekey2 = "rain";
+var flag = 1;
+function titleChange(){
+flag = flag^1
+if (flag == 0){
+document.title = titlekey1;}
+else{
+document.title = titlekey2;}
 }
-
-#container {
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
+setInterval(titleChange, 1000);
+</script>
+<style>
+	body{
+		background-color: #FF69B4;
+		font-size: 34px;
+        color: #fff;
+		text-align: center;
+		text-decoration: none;
+	}
+	h3{
+		font-size: 60px;
+		color: #fff;
+		text-align: center;
+		padding-top: 30px;
+		font-weight: bold;
+		font-style: normal;
 	}
 
-a img {
-	border:none;
-}
+	.image img:nth-child(2) {
+        display: none;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: auto;
+		margin-bottom: auto;
+    }
+    .image:hover img:first-child {
+        display: none;
+		align-items: center;
+    }
+    .image:hover img:nth-child(2) {
+        display: block;
+		align-items: center;
+    } 
 
--->
 </style>
 </head>
+
 <body>
-<div id="container">
-<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
-</div>
+<h3>这里是雨音的小站，网站正在开发中</h3>
+<p>We know the time of joy will pass again someday</p>
+<p>Then, fresh wind blows It treasures that is happy</p>
+<p>Too, to be sad, too</p>
+<p>Let's repeat it eternally and live, and go</p>
+<p>Maybe happy リプレイマシ一ン みたいに Oh Yeah</p>
+<p>いつまでもこの歌だけ きっと忘れない</p>
+<a href="https://toneworks.product.co.jp/ssr" target="_blank">佐仓雨音ssr，需要挂梯子</a>
+<p>5.23</p>
+<!--<img src="佐仓雨音.png" alt="描述文本" width="960" height="560" title="rain">-->
+<div class="image">
+        <img src="image/21.png" alt="test1" width="960" height="540">
+        <img src="image/23.png" alt="test2" width="960" height="540">
+    </div> 
+<div class="image">
+        <img src="image/11.png" alt="test1" width="960" height="540">
+        <img src="image/13.png" alt="test2" width="960" height="540">
+    </div>
+<audio controls="controls" autoplay="autoplay">
+  <source src="audio1.mp3" type="audio/mpeg" />
+</audio>
+<a href="1.rar" download="samuhoshi.rar">
+下载链接
+</a>
 </body>
+
 </html>
