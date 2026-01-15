@@ -38,7 +38,7 @@ if __name__ == "__main__":
 请大家欣赏《寻找失去的未来》里面的古川结(人设是具身智能)  
 还有《在月之彼岸邂逅》的佐仓雨音(人设是乔布斯？的女儿)  
 
-![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/sakurarain/image/01.png)  
-<img src="./sakurarain/image/11.png" width="1000" alt="何意味">  
+![sakura rain](https://github.com/mashiro-01/mashiro-01.github.io/raw/main/images/01.png)  
+<img src="./images/11.png" width="1000" alt="何意味">  
 [`GitHub主页`](https://github.com/mashiro-01)  
 [`mashiro的E-mail`](mailto:mashiro@mashiro.com.cn)  
