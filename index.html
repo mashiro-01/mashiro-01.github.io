@@ -8,8 +8,8 @@
 	<link rel="icon" href="images/icon.png">
 	<!--<title>sakura rain</title>-->
 	<script type="text/javascript">
-		var titlekey1 = "sakura";
-		var titlekey2 = "rain";
+		var titlekey1 = "sakura rain";
+		var titlekey2 = "小站正在开发中...";
 		var flag = 1;
 		function titleChange() {
 			flag = flag ^ 1
@@ -40,22 +40,27 @@
 			font-style: normal;
 		}
 
-		.image img:nth-child(2) {
-			display: none;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: auto;
-			margin-bottom: auto;
+		.image {
+			position: relative;
+			display: block;
+			width: 960px;
+			margin: 0 auto;
 		}
 
-		.image:hover img:first-child {
-			display: none;
-			align-items: center;
+		.image img {
+			display: block;
+		}
+
+		.image img:nth-child(2) {
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			transition: opacity 1s ease;
 		}
 
 		.image:hover img:nth-child(2) {
-			display: block;
-			align-items: center;
+			opacity: 1;
 		}
 	</style>
 </head>
@@ -69,7 +74,7 @@
 	<p>Maybe happy リプレイマシ一ン みたいに Oh Yeah</p>
 	<p>いつまでもこの歌だけ きっと忘れない</p>
 	<a href="https://toneworks.product.co.jp/ssr" target="_blank">佐仓雨音ssr，需要挂梯子</a>
-	<p>5.23</p>
+	<p>开发ing</p>
 	<!--<img src="佐仓雨音.png" alt="描述文本" width="960" height="560" title="rain">-->
 	<div class="image">
 		<img src="images/21.png" alt="test1" width="960" height="540">
