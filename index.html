@@ -38,19 +38,21 @@
 			right: 20px;
 			background-color: rgba(255, 255, 255, 0.25);
 			backdrop-filter: blur(10px);
+			border-radius: 20px;
 			padding: 10px 20px;
-			border-radius: 15px;
 			font-size: 16px;
 			cursor: pointer;
 			transition: all 0.3s ease;
 			text-decoration: none;
 			display: inline-block;
 			color: #fff;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 		}
 
 		.login-status:hover {
 			background-color: rgba(255, 255, 255, 0.4);
 			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 		}
 
 		h3 {
@@ -137,7 +139,7 @@
 	<audio controls autoplay loop preload="auto">
 		<source src="audios/audio1.mp3" type="audio/mpeg" />
 	</audio>
-	<a href="files/1.rar" download="samuhoshi.rar">
+	<a id="downloadLink" href="files/1.rar" download="samuhoshi.rar" style="display: none;">
 		下载链接
 	</a>
 
@@ -147,6 +149,7 @@
 			const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 			const username = localStorage.getItem('username');
 			const loginStatusEl = document.getElementById('loginStatus');
+			const downloadLinkEl = document.getElementById('downloadLink');
 
 			if (isLoggedIn && username) {
 				loginStatusEl.textContent = '用户: ' + username;
@@ -155,13 +158,22 @@
 					if (confirm('是否退出登录？')) {
 						localStorage.removeItem('isLoggedIn');
 						localStorage.removeItem('username');
-						updateLoginStatus();
+						// 重新加载页面
+						window.location.reload();
 					}
 				};
+				// 显示下载链接
+				if (downloadLinkEl) {
+					downloadLinkEl.style.display = 'block';
+				}
 			} else {
 				loginStatusEl.textContent = '未登录';
 				loginStatusEl.href = 'login.html';
 				loginStatusEl.onclick = null;
+				// 隐藏下载链接
+				if (downloadLinkEl) {
+					downloadLinkEl.style.display = 'none';
+				}
 			}
 		}
 
