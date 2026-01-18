@@ -6,10 +6,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="icon" href="images/icon.png">
+	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
 	<!--<title>sakura rain</title>-->
 	<script type="text/javascript">
-		var titlekey1 = "sakura rain";
-		var titlekey2 = "小站正在开发中...";
+		var titlekey1 = "mashiro website";
+		var titlekey2 = "真白的小站正在开发中...";
 		var flag = 1;
 		function titleChange() {
 			flag = flag ^ 1
@@ -20,7 +21,7 @@
 				document.title = titlekey2;
 			}
 		}
-		setInterval(titleChange, 1000);
+		setInterval(titleChange, 2000);
 	</script>
 	<style>
 		body {
@@ -29,6 +30,27 @@
 			color: #fff;
 			text-align: center;
 			text-decoration: none;
+		}
+
+		.login-status {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			background-color: rgba(255, 255, 255, 0.25);
+			backdrop-filter: blur(10px);
+			padding: 10px 20px;
+			border-radius: 15px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-decoration: none;
+			display: inline-block;
+			color: #fff;
+		}
+
+		.login-status:hover {
+			background-color: rgba(255, 255, 255, 0.4);
+			transform: translateY(-2px);
 		}
 
 		h3 {
@@ -44,11 +66,36 @@
 			position: relative;
 			display: block;
 			width: 960px;
-			margin: 0 auto;
+			margin: 30px auto;
+		}
+
+		audio {
+			margin-top: 30px;
+			width: 80%;
+			max-width: 600px;
+			height: 40px;
+			border-radius: 20px;
+			filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+		}
+
+		audio::-webkit-media-controls-panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			backdrop-filter: blur(10px);
+		}
+
+		a {
+			display: block;
+			margin-top: 20px;
+		}
+
+		.handwriting {
+			font-family: 'Comic Sans MS', 'Zen Maru Gothic', 'Chalkboard SE', sans-serif;
+			/*font-family: 'Zen Maru Gothic', sans-serif;*/
 		}
 
 		.image img {
 			display: block;
+			border-radius: 20px;
 		}
 
 		.image img:nth-child(2) {
@@ -66,13 +113,16 @@
 </head>
 
 <body>
-	<h3>这里是雨音的小站，网站正在开发中</h3>
-	<p>We know the time of joy will pass again someday</p>
-	<p>Then, fresh wind blows It treasures that is happy</p>
-	<p>Too, to be sad, too</p>
-	<p>Let's repeat it eternally and live, and go</p>
-	<p>Maybe happy リプレイマシ一ン みたいに Oh Yeah</p>
-	<p>いつまでもこの歌だけ きっと忘れない</p>
+	<a id="loginStatus" class="login-status" href="login.html">未登录</a>
+	<h3>这里是真白的小站，网站正在开发中</h3>
+	<p class="handwriting">以下歌曲节选自replay machine</p>
+	<p class="handwriting">We know. The time of joy will pass again someday.</p>
+	<p class="handwriting">Then, fresh wind blows. It treasures that is happy.</p>
+	<p class="handwriting">Too, to be sad, too.</p>
+	<p class="handwriting">Let's repeat it eternally, and live, and go!</p>
+	<p class="handwriting">Maybe happy...</p>
+	<p class="handwriting">リプレイマシ一ンみたいに Oh Yeah</p>
+	<p class="handwriting">いつまでもこの歌だけ きっと忘れない</p>
 	<a href="https://toneworks.product.co.jp/ssr" target="_blank">佐仓雨音ssr，需要挂梯子</a>
 	<p>开发ing</p>
 	<!--<img src="佐仓雨音.png" alt="描述文本" width="960" height="560" title="rain">-->
@@ -84,12 +134,42 @@
 		<img src="images/11.png" alt="test1" width="960" height="540">
 		<img src="images/13.png" alt="test2" width="960" height="540">
 	</div>
-	<audio controls="controls" autoplay="autoplay">
+	<audio controls autoplay loop preload="auto">
 		<source src="audios/audio1.mp3" type="audio/mpeg" />
 	</audio>
 	<a href="files/1.rar" download="samuhoshi.rar">
 		下载链接
 	</a>
+
+	<script>
+		// 检查登录状态并更新显示
+		function updateLoginStatus() {
+			const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+			const username = localStorage.getItem('username');
+			const loginStatusEl = document.getElementById('loginStatus');
+
+			if (isLoggedIn && username) {
+				loginStatusEl.textContent = '用户: ' + username;
+				loginStatusEl.href = 'javascript:void(0)';
+				loginStatusEl.onclick = function() {
+					if (confirm('是否退出登录？')) {
+						localStorage.removeItem('isLoggedIn');
+						localStorage.removeItem('username');
+						updateLoginStatus();
+					}
+				};
+			} else {
+				loginStatusEl.textContent = '未登录';
+				loginStatusEl.href = 'login.html';
+				loginStatusEl.onclick = null;
+			}
+		}
+
+		// 页面加载时更新登录状态
+		window.onload = function() {
+			updateLoginStatus();
+		};
+	</script>
 </body>
 
 </html>
