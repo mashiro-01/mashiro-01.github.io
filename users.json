@@ -3,6 +3,10 @@
     {
       "username": "mashiro",
       "passwordHash": "8c1f0e2f5c6381091e3748a7e8fdb8b04147d20d934045ab6d6f1a732f9e8170"
+    },
+    {
+      "username": "null",
+      "passwordHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
     }
   ]
 }
