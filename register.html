@@ -161,9 +161,6 @@
 	</div>
 
 	<script>
-		// 正确的邀请码的 SHA256 哈希值（mashiro）
-		const CORRECT_INVITE_CODE_HASH = '244d912087bd49827f9b99d7441e958924d4d9730864e9ec140af34faa469985';
-
 		// 计算字符串的 SHA-256 哈希值
 		async function sha256(message) {
 			const msgBuffer = new TextEncoder().encode(message);
@@ -171,6 +168,18 @@
 			const hashArray = Array.from(new Uint8Array(hashBuffer));
 			const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 			return hashHex;
+		}
+
+		// 从 invitecodes.json 加载邀请码数据
+		async function loadInviteCodes() {
+			try {
+				const response = await fetch('invitecodes.json');
+				const data = await response.json();
+				return data.inviteCodes;
+			} catch (error) {
+				console.error('加载邀请码数据失败:', error);
+				return [];
+			}
 		}
 
 		// 从 users.json 加载用户数据
@@ -202,11 +211,17 @@
 				return;
 			}
 
-			// 验证邀请码
+			// 加载邀请码数据
+			const inviteCodes = await loadInviteCodes();
+
+			// 计算输入的邀请码哈希值
 			const inviteCodeHash = await sha256(inviteCode);
-			if (inviteCodeHash !== CORRECT_INVITE_CODE_HASH) {
+
+			// 验证邀请码
+			const validInviteCode = inviteCodes.find(ic => ic.codeHash === inviteCodeHash && ic.valid);
+			if (!validInviteCode) {
 				messageDiv.className = 'message error';
-				messageDiv.textContent = '邀请码错误，无法注册';
+				messageDiv.textContent = '邀请码错误或已失效，无法注册';
 				messageDiv.style.display = 'block';
 				return;
 			}
