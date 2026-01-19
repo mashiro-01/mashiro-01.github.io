@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="icon" href="images/icon.png">
 	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
-	<title>登录 - mashiro website</title>
+	<title>注册 - mashiro website</title>
 	<style>
 		body {
 			background-color: #FF69B4;
@@ -23,7 +23,7 @@
 			font-family: 'Zen Maru Gothic', sans-serif;
 		}
 
-		.login-container {
+		.register-container {
 			background-color: rgba(255, 255, 255, 0.25);
 			backdrop-filter: blur(10px);
 			border-radius: 20px;
@@ -33,7 +33,7 @@
 			max-width: 400px;
 		}
 
-		.login-title {
+		.register-title {
 			font-size: 32px;
 			color: #fff;
 			text-align: center;
@@ -75,7 +75,7 @@
 			color: #999;
 		}
 
-		.btn-login {
+		.btn-register {
 			width: 100%;
 			padding: 14px;
 			background-color: rgba(255, 255, 255, 0.9);
@@ -89,13 +89,13 @@
 			margin-top: 10px;
 		}
 
-		.btn-login:hover {
+		.btn-register:hover {
 			background-color: #fff;
 			transform: translateY(-2px);
 			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 		}
 
-		.btn-login:active {
+		.btn-register:active {
 			transform: translateY(0);
 		}
 
@@ -134,25 +134,36 @@
 </head>
 
 <body>
-	<div class="login-container">
-		<h2 class="login-title">登录</h2>
+	<div class="register-container">
+		<h2 class="register-title">注册</h2>
 		<div id="message" class="message"></div>
-		<form id="loginForm" onsubmit="handleLogin(event)">
+		<form id="registerForm" onsubmit="handleRegister(event)">
 			<div class="form-group">
-				<label for="username">账号</label>
-				<input type="text" id="username" name="username" placeholder="请输入账号" required>
+				<label for="username">用户名</label>
+				<input type="text" id="username" name="username" placeholder="请输入用户名" required>
 			</div>
 			<div class="form-group">
 				<label for="password">密码</label>
 				<input type="password" id="password" name="password" placeholder="请输入密码" required>
 			</div>
-			<button type="submit" class="btn-login">登录</button>
+			<div class="form-group">
+				<label for="confirmPassword">确认密码</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="请再次输入密码" required>
+			</div>
+			<div class="form-group">
+				<label for="inviteCode">邀请码</label>
+				<input type="text" id="inviteCode" name="inviteCode" placeholder="请输入邀请码" required>
+			</div>
+			<button type="submit" class="btn-register">注册</button>
 		</form>
 		<a href="index.html" class="back-link">返回首页</a>
-		<a href="register.html" class="back-link">没有账号？去注册</a>
+		<a href="login.html" class="back-link">已有账号？去登录</a>
 	</div>
 
 	<script>
+		// 正确的邀请码的 SHA256 哈希值（mashiro）
+		const CORRECT_INVITE_CODE_HASH = '244d912087bd49827f9b99d7441e958924d4d9730864e9ec140af34faa469985';
+
 		// 计算字符串的 SHA-256 哈希值
 		async function sha256(message) {
 			const msgBuffer = new TextEncoder().encode(message);
@@ -174,51 +185,66 @@
 			}
 		}
 
-		async function handleLogin(event) {
+		async function handleRegister(event) {
 			event.preventDefault();
 
-			const username = document.getElementById('username').value;
+			const username = document.getElementById('username').value.trim();
 			const password = document.getElementById('password').value;
+			const confirmPassword = document.getElementById('confirmPassword').value;
+			const inviteCode = document.getElementById('inviteCode').value.trim();
 			const messageDiv = document.getElementById('message');
 
-			// 加载用户数据
+			// 验证密码是否一致
+			if (password !== confirmPassword) {
+				messageDiv.className = 'message error';
+				messageDiv.textContent = '两次输入的密码不一致，请重试';
+				messageDiv.style.display = 'block';
+				return;
+			}
+
+			// 验证邀请码
+			const inviteCodeHash = await sha256(inviteCode);
+			if (inviteCodeHash !== CORRECT_INVITE_CODE_HASH) {
+				messageDiv.className = 'message error';
+				messageDiv.textContent = '邀请码错误，无法注册';
+				messageDiv.style.display = 'block';
+				return;
+			}
+
+			// 加载现有用户数据
 			const users = await loadUsers();
 
-			// 计算输入密码的哈希值
-			const inputPasswordHash = await sha256(password);
-
-			// 查找匹配的用户
-			const user = users.find(u => u.username === username && u.passwordHash === inputPasswordHash);
-
-			if (user) {
-				messageDiv.className = 'message success';
-				messageDiv.textContent = '登录成功！正在跳转...';
-				messageDiv.style.display = 'block';
-
-				// 保存登录状态到localStorage
-				localStorage.setItem('isLoggedIn', 'true');
-				localStorage.setItem('username', username);
-
-				// 延迟跳转
-				setTimeout(() => {
-					window.location.href = 'index.html';
-				}, 1500);
-			} else {
+			// 检查用户名是否已存在
+			if (users.find(u => u.username === username)) {
 				messageDiv.className = 'message error';
-				messageDiv.textContent = '账号或密码错误，请重试';
+				messageDiv.textContent = '用户名已存在，请使用其他用户名';
 				messageDiv.style.display = 'block';
-
-				// 清空密码框
-				document.getElementById('password').value = '';
+				return;
 			}
+
+			// 计算密码哈希值
+			const passwordHash = await sha256(password);
+
+			// 创建新用户
+			const newUser = {
+				username: username,
+				passwordHash: passwordHash
+			};
+
+			// 添加到用户列表
+			users.push(newUser);
+
+			// 注意：由于浏览器安全限制，无法直接写入 users.json 文件
+			// 实际使用时需要后端支持
+			messageDiv.className = 'message success';
+			messageDiv.textContent = '注册成功！请前往登录页面登录';
+			messageDiv.style.display = 'block';
+
+			// 延迟跳转到登录页面
+			setTimeout(() => {
+				window.location.href = 'login.html';
+			}, 2000);
 		}
-
-		// 检查是否已登录
-		window.onload = function() {
-			if (localStorage.getItem('isLoggedIn') === 'true') {
-				window.location.href = 'index.html';
-			}
-		};
 	</script>
 </body>
 
