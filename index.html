@@ -347,17 +347,142 @@
 		}
 
 		audio {
-			margin-top: 30px;
-			width: 80%;
-			max-width: 600px;
-			height: 40px;
-			border-radius: 20px;
-			filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+			display: none;
 		}
 
-		audio::-webkit-media-controls-panel {
-			background-color: rgba(255, 255, 255, 0.3);
+		/* 自定义音乐播放器 */
+		.music-player {
+			margin-top: 40px;
+			width: 90%;
+			max-width: 500px;
+			margin-left: auto;
+			margin-right: auto;
+			background: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(20px);
+			border-radius: 25px;
+			padding: 25px 30px;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			transition: all 0.3s ease;
+		}
+
+		.music-player:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+			border-color: rgba(255, 255, 255, 0.3);
+		}
+
+		.music-info {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.music-title {
+			font-size: 18px;
+			font-weight: bold;
+			color: #fff;
+			margin-bottom: 8px;
+			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			letter-spacing: 1px;
+		}
+
+		.music-artist {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.8);
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+		}
+
+		.music-progress {
+			width: 100%;
+			height: 6px;
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 3px;
+			margin-bottom: 15px;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.music-progress-bar {
+			height: 100%;
+			background: linear-gradient(90deg, rgba(255, 182, 193, 0.8), rgba(255, 105, 180, 0.9));
+			border-radius: 3px;
+			width: 0%;
+			transition: width 0.1s linear;
+		}
+
+		.music-progress:hover .music-progress-bar {
+			background: linear-gradient(90deg, rgba(255, 182, 193, 1), rgba(255, 105, 180, 1));
+		}
+
+		.music-time {
+			display: flex;
+			justify-content: space-between;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 15px;
+			font-weight: 300;
+		}
+
+		.music-controls {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.music-btn {
+			background: rgba(255, 255, 255, 0.2);
+			border: none;
+			border-radius: 50%;
+			width: 45px;
+			height: 45px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
 			backdrop-filter: blur(10px);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.music-btn:hover {
+			background: rgba(255, 255, 255, 0.35);
+			transform: scale(1.1);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.music-btn:active {
+			transform: scale(0.95);
+		}
+
+		.music-btn svg {
+			width: 20px;
+			height: 20px;
+			fill: #fff;
+			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+		}
+
+		.music-btn.play-btn {
+			width: 60px;
+			height: 60px;
+			background: linear-gradient(135deg, rgba(255, 182, 193, 0.5), rgba(255, 105, 180, 0.6));
+		}
+
+		.music-btn.play-btn svg {
+			width: 26px;
+			height: 26px;
+		}
+
+		.music-btn.play-btn:hover {
+			background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 105, 180, 0.8));
+		}
+
+		.music-playlist {
+			text-align: center;
+			margin-top: 15px;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.7);
 		}
 
 		a {
@@ -459,14 +584,180 @@
 			<img src="images/11.png" alt="test1" width="960" height="540">
 			<img src="images/13.png" alt="test2" width="960" height="540">
 		</div>
-		<audio controls loop preload="auto">
-			<source src="audios/audio1.mp3" type="audio/mpeg" />
-		</audio>
+
+		<!-- 隐藏的原生音频元素 -->
+		<audio id="audioPlayer" preload="auto"></audio>
+
+		<!-- 自定义音乐播放器 -->
+		<div class="music-player">
+			<div class="music-info">
+				<div class="music-title" id="musicTitle">Replay Machine</div>
+				<div class="music-artist" id="musicArtist">佐仓雨音</div>
+			</div>
+
+			<div class="music-progress" id="progressBar">
+				<div class="music-progress-bar" id="progressBarFill"></div>
+			</div>
+
+			<div class="music-time">
+				<span id="currentTime">0:00</span>
+				<span id="totalTime">0:00</span>
+			</div>
+
+			<div class="music-controls">
+				<button class="music-btn" id="prevBtn" title="上一首">
+					<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+				</button>
+				<button class="music-btn play-btn" id="playBtn" title="播放/暂停">
+					<svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+					<svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+				</button>
+				<button class="music-btn" id="nextBtn" title="下一首">
+					<svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+				</button>
+			</div>
+
+			<div class="music-playlist">
+				<span id="playlistInfo">1 / 2</span>
+			</div>
+		</div>
+
 		<a id="downloadLink" href="files/1.rar" download="samuhoshi.rar" style="display: none;">
 			下载链接
 		</a>
 
 		<script>
+			// 音乐播放器功能
+			class MusicPlayer {
+				constructor() {
+					this.audio = document.getElementById('audioPlayer');
+					this.playBtn = document.getElementById('playBtn');
+					this.prevBtn = document.getElementById('prevBtn');
+					this.nextBtn = document.getElementById('nextBtn');
+					this.progressBar = document.getElementById('progressBar');
+					this.progressBarFill = document.getElementById('progressBarFill');
+					this.currentTimeEl = document.getElementById('currentTime');
+					this.totalTimeEl = document.getElementById('totalTime');
+					this.musicTitle = document.getElementById('musicTitle');
+					this.musicArtist = document.getElementById('musicArtist');
+					this.playlistInfo = document.getElementById('playlistInfo');
+					this.playIcon = document.getElementById('playIcon');
+					this.pauseIcon = document.getElementById('pauseIcon');
+
+					this.playlist = [
+						{ title: 'Replay Machine', artist: '佐仓雨音', src: 'audios/audio1.mp3' },
+						{ title: 'Track 2', artist: '佐仓雨音', src: 'audios/audio.mp3' }
+					];
+					this.currentIndex = 0;
+					this.isPlaying = false;
+
+					this.init();
+				}
+
+				init() {
+					this.loadSong(this.currentIndex);
+					this.addEventListeners();
+				}
+
+				loadSong(index) {
+					const song = this.playlist[index];
+					this.audio.src = song.src;
+					this.musicTitle.textContent = song.title;
+					this.musicArtist.textContent = song.artist;
+					this.playlistInfo.textContent = `${index + 1} / ${this.playlist.length}`;
+
+					// 重置进度
+					this.progressBarFill.style.width = '0%';
+					this.currentTimeEl.textContent = '0:00';
+				}
+
+				play() {
+					this.audio.play();
+					this.isPlaying = true;
+					this.playIcon.style.display = 'none';
+					this.pauseIcon.style.display = 'block';
+				}
+
+				pause() {
+					this.audio.pause();
+					this.isPlaying = false;
+					this.playIcon.style.display = 'block';
+					this.pauseIcon.style.display = 'none';
+				}
+
+				togglePlay() {
+					if (this.isPlaying) {
+						this.pause();
+					} else {
+						this.play();
+					}
+				}
+
+				prevSong() {
+					this.currentIndex--;
+					if (this.currentIndex < 0) {
+						this.currentIndex = this.playlist.length - 1;
+					}
+					this.loadSong(this.currentIndex);
+					if (this.isPlaying) {
+						this.play();
+					}
+				}
+
+				nextSong() {
+					this.currentIndex++;
+					if (this.currentIndex >= this.playlist.length) {
+						this.currentIndex = 0;
+					}
+					this.loadSong(this.currentIndex);
+					if (this.isPlaying) {
+						this.play();
+					}
+				}
+
+				updateProgress() {
+					const { duration, currentTime } = this.audio;
+					if (isNaN(duration)) return;
+
+					const progressPercent = (currentTime / duration) * 100;
+					this.progressBarFill.style.width = `${progressPercent}%`;
+
+					// 更新时间显示
+					this.currentTimeEl.textContent = this.formatTime(currentTime);
+					this.totalTimeEl.textContent = this.formatTime(duration);
+				}
+
+				setProgress(e) {
+					const width = this.progressBar.clientWidth;
+					const clickX = e.offsetX;
+					const duration = this.audio.duration;
+
+					if (isNaN(duration)) return;
+
+					this.audio.currentTime = (clickX / width) * duration;
+				}
+
+				formatTime(seconds) {
+					const mins = Math.floor(seconds / 60);
+					const secs = Math.floor(seconds % 60);
+					return `${mins}:${secs.toString().padStart(2, '0')}`;
+				}
+
+				addEventListeners() {
+					this.playBtn.addEventListener('click', () => this.togglePlay());
+					this.prevBtn.addEventListener('click', () => this.prevSong());
+					this.nextBtn.addEventListener('click', () => this.nextSong());
+
+					this.audio.addEventListener('timeupdate', () => this.updateProgress());
+					this.audio.addEventListener('ended', () => this.nextSong());
+					this.audio.addEventListener('loadedmetadata', () => {
+						this.totalTimeEl.textContent = this.formatTime(this.audio.duration);
+					});
+
+					this.progressBar.addEventListener('click', (e) => this.setProgress(e));
+				}
+			}
+
 			// 打字机效果 - 改进版
 			class Typewriter {
 				constructor(elementId, text, speed = 150) {
@@ -548,6 +839,9 @@
 				// 启动打字机效果
 				const typewriter = new Typewriter('typingTitle', '这里是真白的小站，网站正在开发中', 150);
 				typewriter.start();
+
+				// 初始化音乐播放器
+				const musicPlayer = new MusicPlayer();
 
 				// 侧边栏切换功能
 				const sideBar = document.getElementById('sideBar');
