@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="icon" href="images/icon.png">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<title>Research Profile - mashiro</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+			font-family: 'Noto Sans SC', 'Roboto', 'Microsoft YaHei', sans-serif;
+			color: #e8e8e8;
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 40px 20px;
+		}
+
+		/* 顶部导航 */
+		.top-nav {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 1000;
+		}
+
+		.nav-link {
+			background-color: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-size: 14px;
+			text-decoration: none;
+			color: #b8c5d6;
+			display: inline-block;
+			margin-left: 10px;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			font-weight: 400;
+		}
+
+		.nav-link:hover {
+			background-color: rgba(184, 197, 214, 0.15);
+			color: #fff;
+			border-color: rgba(184, 197, 214, 0.3);
+		}
+
+		/* 语言切换按钮 */
+		.lang-switch-container {
+			position: fixed;
+			top: 80px;
+			right: 20px;
+			z-index: 1000;
+		}
+
+		.lang-switch {
+			background-color: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border-radius: 5px;
+			padding: 8px 16px;
+			font-size: 13px;
+			text-decoration: none;
+			color: #b8c5d6;
+			display: inline-block;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			font-weight: 400;
+		}
+
+		.lang-switch:hover {
+			background-color: rgba(184, 197, 214, 0.15);
+			color: #fff;
+			border-color: rgba(184, 197, 214, 0.3);
+		}
+
+		/* 主标题 */
+		.page-title {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 42px;
+			font-weight: 300;
+			text-align: center;
+			padding: 60px 0 40px;
+			letter-spacing: 4px;
+			color: #b8c5d6;
+			animation: fadeInDown 1s ease;
+			border-bottom: 1px solid rgba(184, 197, 214, 0.2);
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* 个人资料卡片 */
+		.profile-card {
+			background: rgba(255, 255, 255, 0.03);
+			backdrop-filter: blur(10px);
+			border-radius: 5px;
+			padding: 40px;
+			margin: 30px 0;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			animation: fadeInUp 1s ease;
+			transition: transform 0.3s ease;
+			border: 1px solid rgba(184, 197, 214, 0.1);
+		}
+
+		.profile-card:hover {
+			transform: translateY(-3px);
+			border-color: rgba(184, 197, 214, 0.2);
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.profile-header {
+			display: flex;
+			align-items: center;
+			margin-bottom: 30px;
+		}
+
+		.avatar {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			overflow: hidden;
+			border: 3px solid rgba(184, 197, 214, 0.3);
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			margin-right: 30px;
+		}
+
+		.avatar img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.profile-info h2 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 28px;
+			font-weight: 400;
+			margin-bottom: 8px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+		}
+
+		.profile-info .subtitle {
+			font-size: 14px;
+			opacity: 0.7;
+			margin-bottom: 5px;
+			font-weight: 300;
+			letter-spacing: 1px;
+		}
+
+		.profile-info .status {
+			display: inline-block;
+			background: rgba(184, 197, 214, 0.1);
+			padding: 5px 15px;
+			border-radius: 3px;
+			font-size: 12px;
+			margin-top: 10px;
+			border: 1px solid rgba(184, 197, 214, 0.2);
+			font-weight: 300;
+		}
+
+		/* 个人简介 */
+		.bio-section {
+			margin: 20px 0;
+			line-height: 1.9;
+			font-size: 15px;
+			font-weight: 300;
+		}
+
+		.bio-section h3 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 18px;
+			font-weight: 400;
+			margin-bottom: 15px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+			border-left: 3px solid rgba(184, 197, 214, 0.3);
+			padding-left: 12px;
+		}
+
+		.bio-section p {
+			margin-bottom: 10px;
+			text-align: left;
+			opacity: 0.85;
+		}
+
+		/* 技能标签 */
+		.skills-section {
+			margin: 30px 0;
+		}
+
+		.skills-section h3 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 18px;
+			font-weight: 400;
+			margin-bottom: 20px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+			border-left: 3px solid rgba(184, 197, 214, 0.3);
+			padding-left: 12px;
+		}
+
+		.skill-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+
+		.skill-tag {
+			background: rgba(184, 197, 214, 0.08);
+			padding: 8px 16px;
+			border-radius: 3px;
+			font-size: 13px;
+			transition: all 0.3s ease;
+			cursor: default;
+			border: 1px solid rgba(184, 197, 214, 0.15);
+			font-weight: 300;
+			letter-spacing: 0.5px;
+		}
+
+		.skill-tag.primary {
+			background: rgba(184, 197, 214, 0.12);
+			border-color: rgba(184, 197, 214, 0.25);
+		}
+
+		.skill-tag:hover {
+			background: rgba(184, 197, 214, 0.2);
+			border-color: rgba(184, 197, 214, 0.4);
+			transform: translateY(-2px);
+		}
+
+		/* 社交链接 */
+		.social-section {
+			margin: 30px 0;
+		}
+
+		.social-section h3 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 18px;
+			font-weight: 400;
+			margin-bottom: 20px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+			border-left: 3px solid rgba(184, 197, 214, 0.3);
+			padding-left: 12px;
+		}
+
+		.social-links {
+			display: flex;
+			gap: 15px;
+			flex-wrap: wrap;
+		}
+
+		.social-link {
+			background: rgba(184, 197, 214, 0.08);
+			padding: 12px 24px;
+			border-radius: 3px;
+			text-decoration: none;
+			color: #b8c5d6;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(184, 197, 214, 0.15);
+			font-weight: 300;
+		}
+
+		.social-link:hover {
+			background: rgba(184, 197, 214, 0.15);
+			border-color: rgba(184, 197, 214, 0.3);
+		}
+
+		/* 项目展示 */
+		.projects-section {
+			margin: 30px 0;
+		}
+
+		.projects-section h3 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 18px;
+			font-weight: 400;
+			margin-bottom: 20px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+			border-left: 3px solid rgba(184, 197, 214, 0.3);
+			padding-left: 12px;
+		}
+
+		.project-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 20px;
+		}
+
+		.project-card {
+			background: rgba(184, 197, 214, 0.05);
+			border-radius: 5px;
+			padding: 25px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+			border: 1px solid rgba(184, 197, 214, 0.1);
+		}
+
+		.project-card:hover {
+			background: rgba(184, 197, 214, 0.1);
+			transform: translateY(-3px);
+			border-color: rgba(184, 197, 214, 0.2);
+		}
+
+		.project-card h4 {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 16px;
+			font-weight: 400;
+			margin-bottom: 10px;
+			color: #b8c5d6;
+			letter-spacing: 1px;
+		}
+
+		.project-card p {
+			font-size: 13px;
+			opacity: 0.8;
+			line-height: 1.7;
+			font-weight: 300;
+		}
+
+		/* 统计数据 */
+		.stats-section {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 20px;
+			margin: 30px 0;
+		}
+
+		.stat-card {
+			background: rgba(184, 197, 214, 0.05);
+			border-radius: 5px;
+			padding: 25px;
+			text-align: center;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(184, 197, 214, 0.1);
+		}
+
+		.stat-card:hover {
+			background: rgba(184, 197, 214, 0.1);
+			border-color: rgba(184, 197, 214, 0.2);
+		}
+
+		.stat-card .number {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 32px;
+			font-weight: 400;
+			margin-bottom: 10px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+		}
+
+		.stat-card .label {
+			font-size: 13px;
+			opacity: 0.7;
+			font-weight: 300;
+		}
+
+		/* 页脚 */
+		.footer {
+			text-align: center;
+			padding: 40px 0;
+			font-size: 12px;
+			opacity: 0.6;
+			font-weight: 300;
+		}
+
+		/* 时间显示 */
+		.time-display {
+			text-align: center;
+			padding: 30px 0;
+			margin-top: 20px;
+			border-top: 1px solid rgba(184, 197, 214, 0.1);
+		}
+
+		.time-display .time-label {
+			font-family: 'Noto Serif SC', serif;
+			font-size: 14px;
+			color: #b8c5d6;
+			letter-spacing: 2px;
+			margin-bottom: 15px;
+			opacity: 0.7;
+			font-weight: 300;
+		}
+
+		.time-display .current-time {
+			font-family: 'Roboto', 'Noto Sans SC', monospace;
+			font-size: 16px;
+			color: #b8c5d6;
+			letter-spacing: 1px;
+			opacity: 0.9;
+			font-weight: 300;
+		}
+
+		.time-display .current-time .date-part {
+			margin-right: 20px;
+		}
+
+		.time-display .current-time .time-part {
+			margin-right: 20px;
+		}
+
+		.time-display .current-time .weekday-part {
+			font-weight: 400;
+			color: #b8c5d6;
+		}
+
+		/* 雪花效果 */
+		.snowflake {
+			position: fixed;
+			top: -10px;
+			color: #fff;
+			font-size: 1em;
+			font-family: Arial, sans-serif;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+			user-select: none;
+			cursor: default;
+			animation-name: snowflakes-fall, snowflakes-shake;
+			animation-duration: 10s, 3s;
+			animation-timing-function: linear, ease-in-out;
+			animation-iteration-count: infinite, infinite;
+			animation-play-state: running, running;
+			pointer-events: none;
+			z-index: 1;
+			opacity: 0.6;
+		}
+
+		@keyframes snowflakes-fall {
+			0% {
+				top: -10%;
+			}
+
+			100% {
+				top: 100%;
+			}
+		}
+
+		@keyframes snowflakes-shake {
+
+			0%,
+			100% {
+				transform: translateX(0);
+			}
+
+			50% {
+				transform: translateX(80px);
+			}
+		}
+
+		/* 使用nth-child为每个雪花创建不同的动画 */
+		.snowflake:nth-of-type(1) {
+			left: 1%;
+			animation-delay: 0s, 0s;
+			font-size: 0.8em;
+		}
+
+		.snowflake:nth-of-type(2) {
+			left: 10%;
+			animation-delay: 1s, 1s;
+			font-size: 0.6em;
+		}
+
+		.snowflake:nth-of-type(3) {
+			left: 20%;
+			animation-delay: 6s, 0.5s;
+			font-size: 1em;
+		}
+
+		.snowflake:nth-of-type(4) {
+			left: 30%;
+			animation-delay: 4s, 2s;
+			font-size: 0.7em;
+		}
+
+		.snowflake:nth-of-type(5) {
+			left: 40%;
+			animation-delay: 2s, 2s;
+			font-size: 0.9em;
+		}
+
+		.snowflake:nth-of-type(6) {
+			left: 50%;
+			animation-delay: 8s, 3s;
+			font-size: 0.5em;
+		}
+
+		.snowflake:nth-of-type(7) {
+			left: 60%;
+			animation-delay: 6s, 2s;
+			font-size: 0.8em;
+		}
+
+		.snowflake:nth-of-type(8) {
+			left: 70%;
+			animation-delay: 2.5s, 1s;
+			font-size: 1.1em;
+		}
+
+		.snowflake:nth-of-type(9) {
+			left: 80%;
+			animation-delay: 1s, 0s;
+			font-size: 0.6em;
+		}
+
+		.snowflake:nth-of-type(10) {
+			left: 90%;
+			animation-delay: 3s, 1.5s;
+			font-size: 0.9em;
+		}
+
+		.snowflake:nth-of-type(11) {
+			left: 15%;
+			animation-delay: 5s, 2.5s;
+			font-size: 0.7em;
+		}
+
+		.snowflake:nth-of-type(12) {
+			left: 25%;
+			animation-delay: 7s, 1.5s;
+			font-size: 0.8em;
+		}
+
+		.snowflake:nth-of-type(13) {
+			left: 35%;
+			animation-delay: 3s, 3s;
+			font-size: 0.6em;
+		}
+
+		.snowflake:nth-of-type(14) {
+			left: 45%;
+			animation-delay: 6s, 1s;
+			font-size: 1em;
+		}
+
+		.snowflake:nth-of-type(15) {
+			left: 55%;
+			animation-delay: 4s, 2s;
+			font-size: 0.7em;
+		}
+
+		.snowflake:nth-of-type(16) {
+			left: 65%;
+			animation-delay: 2s, 0.5s;
+			font-size: 0.9em;
+		}
+
+		.snowflake:nth-of-type(17) {
+			left: 75%;
+			animation-delay: 8s, 2.5s;
+			font-size: 0.5em;
+		}
+
+		.snowflake:nth-of-type(18) {
+			left: 85%;
+			animation-delay: 5s, 1.5s;
+			font-size: 0.8em;
+		}
+
+		.snowflake:nth-of-type(19) {
+			left: 5%;
+			animation-delay: 7s, 3s;
+			font-size: 0.6em;
+		}
+
+		.snowflake:nth-of-type(20) {
+			left: 95%;
+			animation-delay: 4s, 2s;
+			font-size: 1em;
+		}
+
+		/* 响应式设计 */
+		@media (max-width: 768px) {
+			.page-title {
+				font-size: 36px;
+			}
+
+			.profile-header {
+				flex-direction: column;
+				text-align: center;
+			}
+
+			.avatar {
+				margin-right: 0;
+				margin-bottom: 20px;
+			}
+
+			.profile-info {
+				text-align: center;
+			}
+
+			.project-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 雪花效果 -->
+	<div class="snowflakes" aria-hidden="true">
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+		<div class="snowflake">❅</div>
+		<div class="snowflake">❆</div>
+	</div>
+
+	<!-- 顶部导航 -->
+	<div class="top-nav">
+		<a href="index.html" class="nav-link">Back to Home</a>
+	</div>
+
+	<!-- 语言切换 -->
+	<div class="lang-switch-container">
+		<a href="profile_cn.html" class="lang-switch">中文</a>
+	</div>
+
+	<div class="container">
+		<!-- 页面标题 -->
+		<h1 class="page-title">RESEARCH PROFILE</h1>
+
+		<!-- 个人资料卡片 -->
+		<div class="profile-card">
+			<div class="profile-header">
+				<div class="avatar">
+					<img src="images/icon.png" alt="Avatar">
+				</div>
+				<div class="profile-info">
+					<h2>Yihuan Yao</h2>
+					<p class="subtitle">Bachelor: Harbin Institute of Technology (Weihai)</p>
+					<p class="subtitle">Master: The Chinese University of Hong Kong, Shenzhen</p>
+					<p class="subtitle">🌸 Researching...</p>
+					<span class="status">🟢 Online</span>
+				</div>
+			</div>
+
+			<!-- 个人简介 -->
+			<div class="bio-section">
+				<h3>About Me</h3>
+				<p>Welcome to my research homepage. I am a researcher focused on artificial intelligence and computer
+					vision, primarily working on autonomous driving systems and multimodal learning.</p>
+				<p>My research interests cover Vision-Language Models (VLM), Vision-Language-Action Models (VLA), and
+					world models for autonomous driving systems. I believe in building intelligent systems that can
+					understand and interact with the world meaningfully.</p>
+				<p>I am passionate about open-source research and contributing to advancing AI technologies that make
+					autonomous driving systems safer and more reliable.</p>
+			</div>
+
+			<!-- 技能标签 -->
+			<div class="skills-section">
+				<h3>Research Interests</h3>
+				<div class="skill-tags">
+					<span class="skill-tag primary">Autonomous Driving</span>
+					<span class="skill-tag primary">Multimodal Learning</span>
+					<span class="skill-tag primary">Vision-Language Models (VLM)</span>
+					<span class="skill-tag primary">Vision-Language-Action Models (VLA)</span>
+					<span class="skill-tag primary">World Models</span>
+				</div>
+			</div>
+
+			<!-- 编程语言 -->
+			<div class="skills-section">
+				<h3>Programming Languages</h3>
+				<div class="skill-tags">
+					<span class="skill-tag">Python</span>
+					<span class="skill-tag">LaTeX</span>
+					<span class="skill-tag">HTML</span>
+					<span class="skill-tag">Markdown</span>
+				</div>
+			</div>
+
+			<!-- 框架和工具 -->
+			<div class="skills-section">
+				<h3>Frameworks & Tools</h3>
+				<div class="skill-tags">
+					<span class="skill-tag">PyTorch</span>
+					<span class="skill-tag">MMCV</span>
+					<span class="skill-tag">MMDetection</span>
+					<span class="skill-tag">OpenCV</span>
+					<span class="skill-tag">NumPy</span>
+					<span class="skill-tag">TensorBoard</span>
+				</div>
+			</div>
+
+			<!-- 社交链接 -->
+			<div class="social-section">
+				<h3>Contact</h3>
+				<div class="social-links">
+					<a href="https://github.com/mashiro-01" target="_blank" class="social-link">GitHub</a>
+					<a href="index.html" class="social-link">Blog</a>
+					<a href="mailto:your.email@example.com" class="social-link">Email</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- 统计数据 -->
+		<div class="stats-section">
+			<div class="stat-card">
+				<div class="number" id="visitCount">0</div>
+				<div class="label">Visits</div>
+			</div>
+			<div class="stat-card">
+				<div class="number">5+</div>
+				<div class="label">Research Areas</div>
+			</div>
+			<div class="stat-card">
+				<div class="number">6+</div>
+				<div class="label">Frameworks & Tools</div>
+			</div>
+		</div>
+
+		<!-- 项目展示 -->
+		<div class="profile-card projects-section">
+			<h3>Research Projects</h3>
+			<div class="project-grid">
+				<div class="project-card">
+					<h4>Mashiro's Blog</h4>
+					<p>Personal blog website sharing research insights and learning notes. Features login/registration
+						and dynamic effects.</p>
+				</div>
+				<div class="project-card">
+					<h4>VLM Research</h4>
+					<p>Vision-Language Model research exploring multimodal understanding and reasoning capabilities.</p>
+				</div>
+				<div class="project-card">
+					<h4>Autonomous Driving System</h4>
+					<p>Deep learning-based perception and decision-making systems for autonomous driving.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- 页脚 -->
+		<div class="footer">
+			<p>© 2024 mashiro | 真白的小站</p>
+			<p>Research & Code</p>
+		</div>
+
+		<!-- 时间显示 -->
+		<div class="time-display">
+			<div class="time-label">CURRENT TIME</div>
+			<div class="current-time">
+				<span class="date-part" id="dateDisplay">--</span>
+				<span class="time-part" id="timeDisplay">--:--</span>
+				<span class="weekday-part" id="weekdayDisplay">--</span>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// 基姆拉尔森公式计算星期几（0=周一, 6=周日）
+		function getDayOfWeek(year, month, day) {
+			// 月份调整：1月和2月看作上一年的13月和14月
+			if (month < 3) {
+				month += 12;
+				year--;
+			}
+			// 基姆拉尔森公式
+			const dayOfWeek = (day + 2 * month + Math.floor(3 * (month + 1) / 5) + year + Math.floor(year / 4) - Math.floor(year / 100) + Math.floor(year / 400)) % 7;
+			return dayOfWeek;
+		}
+
+		// 更新时间显示
+		async function updateClockDisplay() {
+			const dateDisplay = document.getElementById('dateDisplay');
+			const timeDisplay = document.getElementById('timeDisplay');
+			const weekdayDisplay = document.getElementById('weekdayDisplay');
+
+			try {
+				// 从授时中心获取北京时间
+				const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Shanghai');
+				const data = await response.json();
+				const beijingTime = new Date(data.datetime);
+
+				// 使用基姆拉尔森公式计算星期几
+				const year = beijingTime.getFullYear();
+				const month = beijingTime.getMonth() + 1;
+				const day = beijingTime.getDate();
+				const hour = beijingTime.getHours();
+				const minute = beijingTime.getMinutes();
+				const dayOfWeek = getDayOfWeek(year, month, day);
+
+				// 星期数组
+				const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+				// 更新显示
+				dateDisplay.textContent = `${months[month - 1]} ${day.toString().padStart(2, '0')}, ${year}`;
+				timeDisplay.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+				weekdayDisplay.textContent = weekdays[dayOfWeek];
+
+			} catch (error) {
+				console.error('获取时间失败，使用本地时间:', error);
+				// 如果API失败，使用本地时间
+				const localTime = new Date();
+				const year = localTime.getFullYear();
+				const month = localTime.getMonth() + 1;
+				const day = localTime.getDate();
+				const hour = localTime.getHours();
+				const minute = localTime.getMinutes();
+				const dayOfWeek = getDayOfWeek(year, month, day);
+
+				const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+				dateDisplay.textContent = `${months[month - 1]} ${day.toString().padStart(2, '0')}, ${year}`;
+				timeDisplay.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+				weekdayDisplay.textContent = weekdays[dayOfWeek];
+			}
+		}
+
+		// 从授时中心获取时间并更新在线状态
+		async function updateOnlineStatus() {
+			const statusElement = document.querySelector('.status');
+
+			try {
+				// 使用多个时间API确保获取准确时间
+				const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Shanghai');
+				const data = await response.json();
+				const beijingTime = new Date(data.datetime);
+
+				// 使用基姆拉尔森公式计算星期几
+				const year = beijingTime.getFullYear();
+				const month = beijingTime.getMonth() + 1; // getMonth()返回0-11
+				const day = beijingTime.getDate();
+				const dayOfWeek = getDayOfWeek(year, month, day);
+
+				// 获取当前小时（北京时间）
+				const hour = beijingTime.getHours();
+
+				// 判断是否在线
+				// 周六(5)和周日(6)显示离线
+				// 工作日(0-4)的10:00-19:00显示在线，其他时间离线
+				const isWeekend = dayOfWeek >= 5; // 5=周六, 6=周日
+				const isWorkingHours = hour >= 10 && hour < 19;
+
+				if (isWeekend || !isWorkingHours) {
+					// 离线状态
+					statusElement.innerHTML = '🔴 Offline';
+				} else {
+					// 在线状态
+					statusElement.innerHTML = '🟢 Online';
+				}
+
+				console.log(`北京时间: ${data.datetime}, 星期${['一', '二', '三', '四', '五', '六', '日'][dayOfWeek]}, ${hour}时`);
+
+			} catch (error) {
+				console.error('获取时间失败，使用本地时间:', error);
+				// 如果API失败，使用本地时间
+				const localTime = new Date();
+				const year = localTime.getFullYear();
+				const month = localTime.getMonth() + 1;
+				const day = localTime.getDate();
+				const hour = localTime.getHours();
+				const dayOfWeek = getDayOfWeek(year, month, day);
+
+				const isWeekend = dayOfWeek >= 5;
+				const isWorkingHours = hour >= 10 && hour < 19;
+
+				if (isWeekend || !isWorkingHours) {
+					statusElement.innerHTML = '🔴 Offline';
+				} else {
+					statusElement.innerHTML = '🟢 Online';
+				}
+			}
+		}
+
+		// 更新访问量（从 localStorage 读取）
+		function updateVisitCount() {
+			let count = localStorage.getItem('profileVisitCount') || '0';
+			count = parseInt(count) + 1;
+			localStorage.setItem('profileVisitCount', count.toString());
+			document.getElementById('visitCount').textContent = count;
+		}
+
+		// 页面加载时执行
+		window.onload = function () {
+			updateVisitCount();
+			updateOnlineStatus();
+			updateClockDisplay();
+
+			// 每分钟更新一次在线状态和时间显示
+			setInterval(() => {
+				updateOnlineStatus();
+				updateClockDisplay();
+			}, 60000);
+		};
+	</script>
+</body>
+
+</html>
