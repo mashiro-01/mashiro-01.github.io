@@ -354,7 +354,7 @@
 		.music-player {
 			margin-top: 40px;
 			width: 90%;
-			max-width: 500px;
+			max-width: 650px;
 			margin-left: auto;
 			margin-right: auto;
 			background: rgba(255, 255, 255, 0.15);
@@ -364,6 +364,9 @@
 			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 			border: 2px solid rgba(255, 255, 255, 0.2);
 			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			gap: 25px;
 		}
 
 		.music-player:hover {
@@ -372,9 +375,40 @@
 			border-color: rgba(255, 255, 255, 0.3);
 		}
 
+		/* 专辑封面 */
+		.album-cover {
+			width: 120px;
+			height: 120px;
+			flex-shrink: 0;
+			border-radius: 15px;
+			overflow: hidden;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			background: rgba(255, 255, 255, 0.1);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.album-cover img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.album-cover .placeholder {
+			font-size: 40px;
+			color: rgba(255, 255, 255, 0.5);
+		}
+
+		/* 播放器内容区域 */
+		.player-content {
+			flex: 1;
+			min-width: 0;
+		}
+
 		.music-info {
 			text-align: center;
-			margin-bottom: 20px;
+			margin-bottom: 15px;
 		}
 
 		.music-title {
@@ -480,9 +514,22 @@
 
 		.music-playlist {
 			text-align: center;
-			margin-top: 15px;
+			margin-top: 10px;
 			font-size: 12px;
 			color: rgba(255, 255, 255, 0.7);
+		}
+
+		/* 响应式设计 - 小屏幕时专辑封面移到上方 */
+		@media (max-width: 600px) {
+			.music-player {
+				flex-direction: column;
+				max-width: 400px;
+			}
+
+			.album-cover {
+				width: 100px;
+				height: 100px;
+			}
 		}
 
 		a {
@@ -590,35 +637,43 @@
 
 		<!-- 自定义音乐播放器 -->
 		<div class="music-player">
-			<div class="music-info">
-				<div class="music-title" id="musicTitle">Replay Machine</div>
-				<div class="music-artist" id="musicArtist">佐仓雨音</div>
+			<!-- 专辑封面 -->
+			<div class="album-cover" id="albumCover">
+				<span class="placeholder">🎵</span>
 			</div>
 
-			<div class="music-progress" id="progressBar">
-				<div class="music-progress-bar" id="progressBarFill"></div>
-			</div>
+			<!-- 播放器内容 -->
+			<div class="player-content">
+				<div class="music-info">
+					<div class="music-title" id="musicTitle">Replay Machine</div>
+					<div class="music-artist" id="musicArtist">佐仓雨音</div>
+				</div>
 
-			<div class="music-time">
-				<span id="currentTime">0:00</span>
-				<span id="totalTime">0:00</span>
-			</div>
+				<div class="music-progress" id="progressBar">
+					<div class="music-progress-bar" id="progressBarFill"></div>
+				</div>
 
-			<div class="music-controls">
-				<button class="music-btn" id="prevBtn" title="上一首">
-					<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-				</button>
-				<button class="music-btn play-btn" id="playBtn" title="播放/暂停">
-					<svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-					<svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-				</button>
-				<button class="music-btn" id="nextBtn" title="下一首">
-					<svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-				</button>
-			</div>
+				<div class="music-time">
+					<span id="currentTime">0:00</span>
+					<span id="totalTime">0:00</span>
+				</div>
 
-			<div class="music-playlist">
-				<span id="playlistInfo">1 / 2</span>
+				<div class="music-controls">
+					<button class="music-btn" id="prevBtn" title="上一首">
+						<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+					</button>
+					<button class="music-btn play-btn" id="playBtn" title="播放/暂停">
+						<svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+						<svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+					</button>
+					<button class="music-btn" id="nextBtn" title="下一首">
+						<svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+					</button>
+				</div>
+
+				<div class="music-playlist">
+					<span id="playlistInfo">1 / 2</span>
+				</div>
 			</div>
 		</div>
 
@@ -643,6 +698,7 @@
 					this.playlistInfo = document.getElementById('playlistInfo');
 					this.playIcon = document.getElementById('playIcon');
 					this.pauseIcon = document.getElementById('pauseIcon');
+					this.albumCover = document.getElementById('albumCover');
 
 					// 自动扫描audios目录下的所有mp3文件
 					this.playlist = this.scanMusicFiles();
@@ -654,13 +710,22 @@
 
 				// 自动扫描音乐文件并解析文件名
 				scanMusicFiles() {
+					// =====================================================
+					// 音乐播放列表配置
+					// 添加新歌曲时，只需在下面数组中添加文件路径即可
+					// 文件命名格式：'audios/演唱者-歌曲名.mp3'
+					// 系统会自动解析文件名，提取演唱者和歌曲信息
+					// =====================================================
 					const musicFiles = [
+						'audios/彩音 - あがらない雨はないんだよ.mp3',
+						'audios/彩音 - レジリエンス.mp3',
+						'audios/志倉千代丸 - オルゴールとピアノと.mp3',
+						'audios/志倉千代丸 - 雨のち想い出.mp3',
 						'audios/志倉千代丸-リプレイマシン.mp3',
 						'audios/水樹奈々-リプレイマシン.mp3'
-						// 添加新歌曲时，只需在这里添加文件路径即可
-						// 格式：'audios/演唱者-歌曲名.mp3'
 					];
 
+					// 自动解析所有音乐文件的文件名
 					return musicFiles.map(filename => {
 						return this.parseFileName(filename);
 					});
@@ -674,22 +739,62 @@
 					// 移除扩展名
 					const nameWithoutExt = filename.replace(/\.mp3$/i, '');
 
-					// 按"-"分割，前面是演唱者，后面是歌曲名
-					const parts = nameWithoutExt.split('-');
+					// 按"-"或" - "分割，前面是演唱者，后面是歌曲名
+					const parts = nameWithoutExt.split(/\s*-\s*/);
 
 					if (parts.length >= 2) {
 						return {
 							title: parts.slice(1).join('-'), // 歌曲名（允许歌曲名中包含"-"）
 							artist: parts[0], // 演唱者
-							src: filepath
+							src: filepath,
+							// 专辑封面图片路径（与mp3文件同名的jpg/png文件）
+							cover: this.findAlbumCover(filepath)
 						};
 					} else {
 						// 如果文件名不符合格式，使用整个文件名作为标题
 						return {
 							title: nameWithoutExt,
 							artist: '未知艺术家',
-							src: filepath
+							src: filepath,
+							cover: this.findAlbumCover(filepath)
 						};
+					}
+				}
+
+				// 查找专辑封面图片
+				findAlbumCover(audioPath) {
+					// 获取音频文件名（不含扩展名）
+					const audioFile = audioPath.split('/').pop().replace(/\.mp3$/i, '');
+
+					// 可能的图片格式
+					const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+					// 尝试查找与音频文件同名的图片
+					for (const ext of imageExtensions) {
+						const imagePath = `audios/${audioFile}.${ext}`;
+						// 这里我们返回路径，实际加载时会尝试加载
+						// 如果图片不存在，会显示占位符
+						return imagePath;
+					}
+
+					return null;
+				}
+
+				// 更新专辑封面
+				updateAlbumCover(song) {
+					if (song.cover) {
+						// 尝试加载封面图片
+						const img = new Image();
+						img.onload = () => {
+							this.albumCover.innerHTML = `<img src="${song.cover}" alt="专辑封面">`;
+						};
+						img.onerror = () => {
+							// 图片加载失败，显示占位符
+							this.albumCover.innerHTML = '<span class="placeholder">🎵</span>';
+						};
+						img.src = song.cover;
+					} else {
+						this.albumCover.innerHTML = '<span class="placeholder">🎵</span>';
 					}
 				}
 
@@ -704,6 +809,9 @@
 					this.musicTitle.textContent = song.title;
 					this.musicArtist.textContent = song.artist;
 					this.playlistInfo.textContent = `${index + 1} / ${this.playlist.length}`;
+
+					// 更新专辑封面
+					this.updateAlbumCover(song);
 
 					// 重置进度
 					this.progressBarFill.style.width = '0%';

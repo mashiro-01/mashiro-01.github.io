@@ -1,0 +1,968 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="icon" href="images/icon.png">
+	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
+	<!--<title>sakura rain</title>-->
+	<script type="text/javascript">
+		var titlekey1 = "mashiro website";
+		var titlekey2 = "真白的小站正在开发中...";
+		var flag = 1;
+		function titleChange() {
+			flag = flag ^ 1
+			if (flag == 0) {
+				document.title = titlekey1;
+			}
+			else {
+				document.title = titlekey2;
+			}
+		}
+		setInterval(titleChange, 2000);
+	</script>
+	<style>
+		body {
+			background-color: #FF69B4;
+			font-size: 34px;
+			color: #fff;
+			text-align: center;
+			text-decoration: none;
+			display: flex;
+			min-height: 100vh;
+			margin: 0;
+			padding: 0;
+		}
+
+		#main {
+			flex: 1;
+			width: 100%;
+		}
+
+		body.scroll-locked {
+			overflow: hidden;
+		}
+
+		.login-status {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			background-color: rgba(255, 255, 255, 0.25);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-decoration: none;
+			display: inline-block;
+			color: #fff;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.login-status:hover {
+			background-color: rgba(255, 255, 255, 0.4);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.profile-link {
+			position: fixed;
+			top: 80px;
+			right: 20px;
+			background-color: rgba(255, 255, 255, 0.25);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-decoration: none;
+			display: inline-block;
+			color: #fff;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.profile-link:hover {
+			background-color: rgba(255, 255, 255, 0.4);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		h3 {
+			font-size: 60px;
+			color: #fff;
+			text-align: center;
+			padding-top: 30px;
+			font-weight: bold;
+			font-style: normal;
+			min-height: 80px;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+				0 0 10px rgba(255, 255, 255, 0.5),
+				0 0 20px rgba(255, 192, 203, 0.3);
+		}
+
+		.typing-cursor {
+			display: inline-block;
+			width: 4px;
+			height: 1.1em;
+			background-color: #fff;
+			margin-left: 3px;
+			margin-bottom: 5px;
+			animation: cursorBlink 1s step-end infinite;
+			vertical-align: text-bottom;
+			box-shadow: 0 0 8px rgba(255, 255, 255, 0.8),
+				0 0 15px rgba(255, 105, 180, 0.5);
+		}
+
+		@keyframes cursorBlink {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+		}
+
+		.post-meta {
+			text-align: center;
+			margin-top: 10px;
+			font-size: 18px;
+			color: rgba(255, 255, 255, 0.8);
+			font-family: Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
+			line-height: 1.6;
+		}
+
+		.post-meta a {
+			display: inline;
+			color: rgba(255, 255, 255, 0.85);
+			text-decoration: none;
+			margin: 0 5px;
+			transition: opacity 0.3s ease;
+		}
+
+		.post-meta a:hover {
+			opacity: 0.7;
+			text-decoration: underline;
+		}
+
+		.post-meta span {
+			margin: 0 3px;
+		}
+
+		#sideBar {
+			width: 250px;
+			background-color: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(10px);
+			padding: 0;
+			box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+			transition: width 0.3s ease;
+			position: fixed;
+			left: 0;
+			top: 0;
+			height: 100vh;
+			overflow-y: auto;
+			z-index: 999;
+		}
+
+		/* 隐藏边栏滚动条但保留滚动功能 */
+		#sideBar::-webkit-scrollbar {
+			display: none;
+		}
+
+		#sideBar {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+
+		#sideBar.collapsed {
+			width: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		#sideBarToggle {
+			position: fixed;
+			left: 0;
+			top: 20px;
+			width: 40px;
+			height: 60px;
+			background-color: rgba(255, 255, 255, 0.25);
+			backdrop-filter: blur(10px);
+			border-radius: 0 10px 10px 0;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
+			color: #fff;
+			transition: all 0.3s ease;
+			z-index: 1001;
+		}
+
+		#sideBarToggle:hover {
+			background-color: rgba(255, 255, 255, 0.4);
+			width: 45px;
+		}
+
+		#sideBarMain {
+			padding: 20px;
+		}
+
+		.introduce-box {
+			background: linear-gradient(135deg, rgba(255, 192, 203, 0.3) 0%, rgba(255, 105, 180, 0.3) 100%);
+			padding: 20px;
+			text-align: center;
+			border-radius: 0 0 15px 15px;
+			margin-bottom: 20px;
+		}
+
+		.introduce-head {
+			margin-bottom: 15px;
+		}
+
+		.introduce-via {
+			width: 80px;
+			height: 80px;
+			margin: 0 auto;
+			border-radius: 50%;
+			overflow: hidden;
+			border: 3px solid rgba(255, 255, 255, 0.5);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.introduce-via img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		#introduce {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.9);
+			line-height: 1.8;
+		}
+
+		#introduce a {
+			color: rgba(255, 255, 255, 0.95);
+			text-decoration: none;
+			transition: opacity 0.3s ease;
+		}
+
+		#introduce a:hover {
+			opacity: 0.7;
+		}
+
+		.nav-title {
+			height: 2px;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+			margin: 15px 0;
+		}
+
+		.icon-list ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.icon-list li {
+			margin-bottom: 5px;
+		}
+
+		.icon-list a {
+			display: flex;
+			align-items: center;
+			color: rgba(255, 255, 255, 0.9);
+			text-decoration: none;
+			padding: 12px 15px;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			font-size: 15px;
+			font-family: Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
+		}
+
+		.icon-list a:hover {
+			background-color: rgba(255, 255, 255, 0.2);
+			transform: translateX(5px);
+		}
+
+		.icon-list a i {
+			margin-right: 10px;
+			font-size: 18px;
+		}
+
+		#sideBarMain {
+			padding: 20px;
+		}
+
+		.catListTitle {
+			font-size: 20px;
+			color: #fff;
+			margin-bottom: 15px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+		}
+
+		.newsItem,
+		.blogStats {
+			margin-bottom: 20px;
+		}
+
+		#navList {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		#navList li {
+			margin-bottom: 10px;
+		}
+
+		#navList a {
+			display: block;
+			color: rgba(255, 255, 255, 0.9);
+			text-decoration: none;
+			padding: 10px 15px;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			font-size: 16px;
+			font-family: Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
+		}
+
+		#navList a:hover {
+			background-color: rgba(255, 255, 255, 0.2);
+			transform: translateX(5px);
+		}
+
+		.image {
+			position: relative;
+			display: block;
+			width: 960px;
+			margin: 30px auto;
+		}
+
+		audio {
+			display: none;
+		}
+
+		/* 自定义音乐播放器 */
+		.music-player {
+			margin-top: 40px;
+			width: 90%;
+			max-width: 500px;
+			margin-left: auto;
+			margin-right: auto;
+			background: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(20px);
+			border-radius: 25px;
+			padding: 25px 30px;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			transition: all 0.3s ease;
+		}
+
+		.music-player:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+			border-color: rgba(255, 255, 255, 0.3);
+		}
+
+		.music-info {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.music-title {
+			font-size: 18px;
+			font-weight: bold;
+			color: #fff;
+			margin-bottom: 8px;
+			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			letter-spacing: 1px;
+		}
+
+		.music-artist {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.8);
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+		}
+
+		.music-progress {
+			width: 100%;
+			height: 6px;
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 3px;
+			margin-bottom: 15px;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.music-progress-bar {
+			height: 100%;
+			background: linear-gradient(90deg, rgba(255, 182, 193, 0.8), rgba(255, 105, 180, 0.9));
+			border-radius: 3px;
+			width: 0%;
+			transition: width 0.1s linear;
+		}
+
+		.music-progress:hover .music-progress-bar {
+			background: linear-gradient(90deg, rgba(255, 182, 193, 1), rgba(255, 105, 180, 1));
+		}
+
+		.music-time {
+			display: flex;
+			justify-content: space-between;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 15px;
+			font-weight: 300;
+		}
+
+		.music-controls {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.music-btn {
+			background: rgba(255, 255, 255, 0.2);
+			border: none;
+			border-radius: 50%;
+			width: 45px;
+			height: 45px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+			backdrop-filter: blur(10px);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.music-btn:hover {
+			background: rgba(255, 255, 255, 0.35);
+			transform: scale(1.1);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.music-btn:active {
+			transform: scale(0.95);
+		}
+
+		.music-btn svg {
+			width: 20px;
+			height: 20px;
+			fill: #fff;
+			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+		}
+
+		.music-btn.play-btn {
+			width: 60px;
+			height: 60px;
+			background: linear-gradient(135deg, rgba(255, 182, 193, 0.5), rgba(255, 105, 180, 0.6));
+		}
+
+		.music-btn.play-btn svg {
+			width: 26px;
+			height: 26px;
+		}
+
+		.music-btn.play-btn:hover {
+			background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 105, 180, 0.8));
+		}
+
+		.music-playlist {
+			text-align: center;
+			margin-top: 15px;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		a {
+			display: block;
+			margin-top: 20px;
+		}
+
+		.handwriting {
+			font-family: 'Comic Sans MS', 'Zen Maru Gothic', 'Chalkboard SE', sans-serif;
+			/*font-family: 'Zen Maru Gothic', sans-serif;*/
+		}
+
+		.image img {
+			display: block;
+			border-radius: 20px;
+		}
+
+		.image img:nth-child(2) {
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			transition: opacity 1s ease;
+		}
+
+		.image:hover img:nth-child(2) {
+			opacity: 1;
+		}
+
+		/* 将 Live2D 看板娘移到右边 */
+		#waifu {
+			left: auto !important;
+			right: 0 !important;
+		}
+
+		#live2d-widget {
+			left: auto !important;
+			right: 0 !important;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="sideBarToggle">▶</div>
+	<div id="sideBar" class="collapsed">
+		<div id="sideBarMain">
+			<div class="introduce-box">
+				<div class="introduce-head">
+					<div class="introduce-via" id="menuBlogAvatar">
+						<img src="images/icon.png" alt="头像">
+					</div>
+				</div>
+				<div id="introduce">
+					昵称：<a href="https://github.com/mashiro-01" target="_blank">mashiro</a><br>
+					状态：<a href="javascript:void(0)">开发中</a><br>
+					域名：<a href="javascript:void(0)">真白的小站</a>
+				</div>
+			</div>
+			<div class="nav-title"></div>
+			<div class="icon-list">
+				<ul id="navList">
+					<li><a href="index.html"><i>🏠</i>首页</a></li>
+					<li><a href="login.html"><i>🔑</i>登录</a></li>
+					<li><a href="register.html"><i>📝</i>注册</a></li>
+					<li><a href="https://github.com/mashiro-01" target="_blank"><i>🐱</i>GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<a id="loginStatus" class="login-status" href="login.html">未登录</a>
+		<a id="profileLink" class="profile-link" href="profile_cn.html">前往学术主页</a>
+		<h3 id="typingTitle"></h3>
+		<div class="post-meta">
+			<span>posted @ </span>
+			<span id="post-date">2026-01-19</span>&nbsp;
+			<a href="https://github.com/mashiro-01" target="_blank">mashiro</a>&nbsp;
+			<span>阅读(<span id="post-view-count">0</span>)</span>&nbsp;
+			<span>评论(<span id="post-comment-count">0</span>)</span>&nbsp;
+			<span>编辑</span>
+		</div>
+		<p class="handwriting">以下歌曲节选自replay machine</p>
+		<p class="handwriting">We know. The time of joy will pass again someday.</p>
+		<p class="handwriting">Then, fresh wind blows. It treasures that is happy.</p>
+		<p class="handwriting">Too, to be sad, too.</p>
+		<p class="handwriting">Let's repeat it eternally, and live, and go!</p>
+		<p class="handwriting">Maybe happy...</p>
+		<p class="handwriting">リプレイマシ一ンみたいに Oh Yeah</p>
+		<p class="handwriting">いつまでもこの歌だけ きっと忘れない</p>
+		<a href="https://toneworks.product.co.jp/ssr" target="_blank">佐仓雨音ssr，需要挂梯子</a>
+		<p>开发ing</p>
+		<!--<img src="佐仓雨音.png" alt="描述文本" width="960" height="560" title="rain">-->
+		<div class="image">
+			<img src="images/21.png" alt="test1" width="960" height="540">
+			<img src="images/23.png" alt="test2" width="960" height="540">
+		</div>
+		<div class="image">
+			<img src="images/11.png" alt="test1" width="960" height="540">
+			<img src="images/13.png" alt="test2" width="960" height="540">
+		</div>
+
+		<!-- 隐藏的原生音频元素 -->
+		<audio id="audioPlayer" preload="auto"></audio>
+
+		<!-- 自定义音乐播放器 -->
+		<div class="music-player">
+			<div class="music-info">
+				<div class="music-title" id="musicTitle">Replay Machine</div>
+				<div class="music-artist" id="musicArtist">佐仓雨音</div>
+			</div>
+
+			<div class="music-progress" id="progressBar">
+				<div class="music-progress-bar" id="progressBarFill"></div>
+			</div>
+
+			<div class="music-time">
+				<span id="currentTime">0:00</span>
+				<span id="totalTime">0:00</span>
+			</div>
+
+			<div class="music-controls">
+				<button class="music-btn" id="prevBtn" title="上一首">
+					<svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+				</button>
+				<button class="music-btn play-btn" id="playBtn" title="播放/暂停">
+					<svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+					<svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+				</button>
+				<button class="music-btn" id="nextBtn" title="下一首">
+					<svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+				</button>
+			</div>
+
+			<div class="music-playlist">
+				<span id="playlistInfo">1 / 2</span>
+			</div>
+		</div>
+
+		<a id="downloadLink" href="files/1.rar" download="samuhoshi.rar" style="display: none;">
+			下载链接
+		</a>
+
+		<script>
+			// 音乐播放器功能
+			class MusicPlayer {
+				constructor() {
+					this.audio = document.getElementById('audioPlayer');
+					this.playBtn = document.getElementById('playBtn');
+					this.prevBtn = document.getElementById('prevBtn');
+					this.nextBtn = document.getElementById('nextBtn');
+					this.progressBar = document.getElementById('progressBar');
+					this.progressBarFill = document.getElementById('progressBarFill');
+					this.currentTimeEl = document.getElementById('currentTime');
+					this.totalTimeEl = document.getElementById('totalTime');
+					this.musicTitle = document.getElementById('musicTitle');
+					this.musicArtist = document.getElementById('musicArtist');
+					this.playlistInfo = document.getElementById('playlistInfo');
+					this.playIcon = document.getElementById('playIcon');
+					this.pauseIcon = document.getElementById('pauseIcon');
+
+					// 自动扫描audios目录下的所有mp3文件
+					this.playlist = this.scanMusicFiles();
+					this.currentIndex = 0;
+					this.isPlaying = false;
+
+					this.init();
+				}
+
+				// 自动扫描音乐文件并解析文件名
+				scanMusicFiles() {
+					// =====================================================
+					// 音乐播放列表配置
+					// 添加新歌曲时，只需在下面数组中添加文件路径即可
+					// 文件命名格式：'audios/演唱者-歌曲名.mp3'
+					// 系统会自动解析文件名，提取演唱者和歌曲信息
+					// =====================================================
+					const musicFiles = [
+						'audios/志倉千代丸-リプレイマシン.mp3',
+						'audios/水樹奈々-リプレイマシン.mp3',
+						// 在下方添加更多歌曲：
+						// 'audios/其他歌手-歌曲名称.mp3',
+						// 'audios/Artist-Song Title.mp3',
+					];
+
+					// 自动解析所有音乐文件的文件名
+					return musicFiles.map(filename => {
+						return this.parseFileName(filename);
+					});
+				}
+
+				// 解析文件名，提取演唱者和歌曲名
+				parseFileName(filepath) {
+					// 获取文件名（不包含路径）
+					const filename = filepath.split('/').pop();
+
+					// 移除扩展名
+					const nameWithoutExt = filename.replace(/\.mp3$/i, '');
+
+					// 按"-"分割，前面是演唱者，后面是歌曲名
+					const parts = nameWithoutExt.split('-');
+
+					if (parts.length >= 2) {
+						return {
+							title: parts.slice(1).join('-'), // 歌曲名（允许歌曲名中包含"-"）
+							artist: parts[0], // 演唱者
+							src: filepath
+						};
+					} else {
+						// 如果文件名不符合格式，使用整个文件名作为标题
+						return {
+							title: nameWithoutExt,
+							artist: '未知艺术家',
+							src: filepath
+						};
+					}
+				}
+
+				init() {
+					this.loadSong(this.currentIndex);
+					this.addEventListeners();
+				}
+
+				loadSong(index) {
+					const song = this.playlist[index];
+					this.audio.src = song.src;
+					this.musicTitle.textContent = song.title;
+					this.musicArtist.textContent = song.artist;
+					this.playlistInfo.textContent = `${index + 1} / ${this.playlist.length}`;
+
+					// 重置进度
+					this.progressBarFill.style.width = '0%';
+					this.currentTimeEl.textContent = '0:00';
+				}
+
+				play() {
+					this.audio.play();
+					this.isPlaying = true;
+					this.playIcon.style.display = 'none';
+					this.pauseIcon.style.display = 'block';
+				}
+
+				pause() {
+					this.audio.pause();
+					this.isPlaying = false;
+					this.playIcon.style.display = 'block';
+					this.pauseIcon.style.display = 'none';
+				}
+
+				togglePlay() {
+					if (this.isPlaying) {
+						this.pause();
+					} else {
+						this.play();
+					}
+				}
+
+				prevSong() {
+					this.currentIndex--;
+					if (this.currentIndex < 0) {
+						this.currentIndex = this.playlist.length - 1;
+					}
+					this.loadSong(this.currentIndex);
+					if (this.isPlaying) {
+						this.play();
+					}
+				}
+
+				nextSong() {
+					this.currentIndex++;
+					if (this.currentIndex >= this.playlist.length) {
+						this.currentIndex = 0;
+					}
+					this.loadSong(this.currentIndex);
+					if (this.isPlaying) {
+						this.play();
+					}
+				}
+
+				updateProgress() {
+					const { duration, currentTime } = this.audio;
+					if (isNaN(duration)) return;
+
+					const progressPercent = (currentTime / duration) * 100;
+					this.progressBarFill.style.width = `${progressPercent}%`;
+
+					// 更新时间显示
+					this.currentTimeEl.textContent = this.formatTime(currentTime);
+					this.totalTimeEl.textContent = this.formatTime(duration);
+				}
+
+				setProgress(e) {
+					const width = this.progressBar.clientWidth;
+					const clickX = e.offsetX;
+					const duration = this.audio.duration;
+
+					if (isNaN(duration)) return;
+
+					this.audio.currentTime = (clickX / width) * duration;
+				}
+
+				formatTime(seconds) {
+					const mins = Math.floor(seconds / 60);
+					const secs = Math.floor(seconds % 60);
+					return `${mins}:${secs.toString().padStart(2, '0')}`;
+				}
+
+				addEventListeners() {
+					this.playBtn.addEventListener('click', () => this.togglePlay());
+					this.prevBtn.addEventListener('click', () => this.prevSong());
+					this.nextBtn.addEventListener('click', () => this.nextSong());
+
+					this.audio.addEventListener('timeupdate', () => this.updateProgress());
+					this.audio.addEventListener('ended', () => this.nextSong());
+					this.audio.addEventListener('loadedmetadata', () => {
+						this.totalTimeEl.textContent = this.formatTime(this.audio.duration);
+					});
+
+					this.progressBar.addEventListener('click', (e) => this.setProgress(e));
+				}
+			}
+
+			// 打字机效果 - 改进版
+			class Typewriter {
+				constructor(elementId, text, speed = 150) {
+					this.element = document.getElementById(elementId);
+					this.text = text;
+					this.speed = speed;
+					this.index = 0;
+					this.cursorElement = null;
+					this.isTyping = false;
+				}
+
+				start() {
+					if (!this.isTyping) {
+						this.isTyping = true;
+						this.element.innerHTML = '';
+						this.createCursor();
+						this.type();
+					}
+				}
+
+				createCursor() {
+					this.cursorElement = document.createElement('span');
+					this.cursorElement.className = 'typing-cursor';
+					this.cursorElement.innerHTML = '&nbsp;';
+					this.element.appendChild(this.cursorElement);
+				}
+
+				type() {
+					if (this.index < this.text.length) {
+						// 在光标前插入字符
+						const char = document.createTextNode(this.text.charAt(this.index));
+						this.element.insertBefore(char, this.cursorElement);
+						this.index++;
+						setTimeout(() => this.type(), this.speed);
+					}
+				}
+			}
+
+			// 检查登录状态并更新显示
+			function updateLoginStatus() {
+				const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+				const username = localStorage.getItem('username');
+				const loginStatusEl = document.getElementById('loginStatus');
+				const downloadLinkEl = document.getElementById('downloadLink');
+
+				if (isLoggedIn && username) {
+					loginStatusEl.textContent = '用户: ' + username;
+					loginStatusEl.href = 'javascript:void(0)';
+					loginStatusEl.onclick = function () {
+						if (confirm('是否退出登录？')) {
+							localStorage.removeItem('isLoggedIn');
+							localStorage.removeItem('username');
+							// 重新加载页面
+							window.location.reload();
+						}
+					};
+					// 显示下载链接
+					if (downloadLinkEl) {
+						downloadLinkEl.style.display = 'block';
+					}
+				} else {
+					loginStatusEl.textContent = '未登录';
+					loginStatusEl.href = 'login.html';
+					loginStatusEl.onclick = null;
+					// 隐藏下载链接
+					if (downloadLinkEl) {
+						downloadLinkEl.style.display = 'none';
+					}
+				}
+			}
+
+			// 页面加载时更新登录状态
+			window.onload = function () {
+				updateLoginStatus();
+
+				// 更新发布日期
+				updatePostDate();
+
+				// 启动打字机效果
+				const typewriter = new Typewriter('typingTitle', '这里是真白的小站，网站正在开发中', 150);
+				typewriter.start();
+
+				// 初始化音乐播放器
+				const musicPlayer = new MusicPlayer();
+
+				// 侧边栏切换功能
+				const sideBar = document.getElementById('sideBar');
+				const sideBarToggle = document.getElementById('sideBarToggle');
+
+				// 切换边栏状态的函数
+				function toggleSidebar() {
+					sideBar.classList.toggle('collapsed');
+					if (sideBar.classList.contains('collapsed')) {
+						sideBarToggle.textContent = '▶';
+						// 恢复 body 滚动
+						document.body.classList.remove('scroll-locked');
+					} else {
+						sideBarToggle.textContent = '◀';
+						// 禁用 body 滚动
+						document.body.classList.add('scroll-locked');
+						// 重置边栏滚动位置到顶部
+						sideBar.scrollTop = 0;
+					}
+				}
+
+				sideBarToggle.addEventListener('click', function (e) {
+					e.stopPropagation();
+					toggleSidebar();
+				});
+
+				// 点击边栏外部区域时收缩边栏
+				document.addEventListener('click', function (e) {
+					// 如果边栏是展开状态，且点击的不是边栏内部和切换按钮
+					if (!sideBar.classList.contains('collapsed') &&
+						!sideBar.contains(e.target) &&
+						!sideBarToggle.contains(e.target)) {
+						toggleSidebar();
+					}
+				});
+
+				// 阻止点击边栏内部时冒泡到 document
+				sideBar.addEventListener('click', function (e) {
+					e.stopPropagation();
+				});
+			};
+
+			// 更新发布日期为当前日期
+			function updatePostDate() {
+				const now = new Date();
+				const year = now.getFullYear();
+				const month = String(now.getMonth() + 1).padStart(2, '0');
+				const day = String(now.getDate()).padStart(2, '0');
+				const hours = String(now.getHours()).padStart(2, '0');
+				const minutes = String(now.getMinutes()).padStart(2, '0');
+
+				const dateStr = `${year}-${month}-${day} ${hours}:${minutes}`;
+				document.getElementById('post-date').textContent = dateStr;
+
+				// 从 localStorage 获取或初始化阅读数
+				let viewCount = localStorage.getItem('viewCount') || Math.floor(Math.random() * 100) + 50;
+				viewCount = parseInt(viewCount) + 1;
+				localStorage.setItem('viewCount', viewCount);
+				document.getElementById('post-view-count').textContent = viewCount;
+
+				// 计算总字数（中文字符 + 英文单词）
+				const content = document.querySelector('.handwriting')?.textContent || '';
+				const chineseChars = content.match(/[\u4e00-\u9fa5]/g) || [];
+				const englishWords = content.match(/[a-zA-Z]+/g) || [];
+				const totalCount = chineseChars.length + englishWords.length;
+
+				// 评论数（可以后续添加评论功能）
+				document.getElementById('post-comment-count').textContent = '0';
+			}
+		</script>
+
+		<!-- Live2D 看板娘 -->
+		<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+	</div>
+</body>
+
+</html>
