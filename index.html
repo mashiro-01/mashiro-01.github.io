@@ -70,7 +70,7 @@
 
 		.profile-link {
 			position: fixed;
-			top: 70px;
+			top: 80px;
 			right: 20px;
 			background-color: rgba(255, 255, 255, 0.25);
 			backdrop-filter: blur(10px);
@@ -644,14 +644,53 @@
 					this.playIcon = document.getElementById('playIcon');
 					this.pauseIcon = document.getElementById('pauseIcon');
 
-					this.playlist = [
-						{ title: 'Replay Machine', artist: '佐仓雨音', src: 'audios/audio1.mp3' },
-						{ title: 'Track 2', artist: '佐仓雨音', src: 'audios/audio.mp3' }
-					];
+					// 自动扫描audios目录下的所有mp3文件
+					this.playlist = this.scanMusicFiles();
 					this.currentIndex = 0;
 					this.isPlaying = false;
 
 					this.init();
+				}
+
+				// 自动扫描音乐文件并解析文件名
+				scanMusicFiles() {
+					const musicFiles = [
+						'audios/志倉千代丸-リプレイマシン.mp3',
+						'audios/水樹奈々-リプレイマシン.mp3'
+						// 添加新歌曲时，只需在这里添加文件路径即可
+						// 格式：'audios/演唱者-歌曲名.mp3'
+					];
+
+					return musicFiles.map(filename => {
+						return this.parseFileName(filename);
+					});
+				}
+
+				// 解析文件名，提取演唱者和歌曲名
+				parseFileName(filepath) {
+					// 获取文件名（不包含路径）
+					const filename = filepath.split('/').pop();
+
+					// 移除扩展名
+					const nameWithoutExt = filename.replace(/\.mp3$/i, '');
+
+					// 按"-"分割，前面是演唱者，后面是歌曲名
+					const parts = nameWithoutExt.split('-');
+
+					if (parts.length >= 2) {
+						return {
+							title: parts.slice(1).join('-'), // 歌曲名（允许歌曲名中包含"-"）
+							artist: parts[0], // 演唱者
+							src: filepath
+						};
+					} else {
+						// 如果文件名不符合格式，使用整个文件名作为标题
+						return {
+							title: nameWithoutExt,
+							artist: '未知艺术家',
+							src: filepath
+						};
+					}
 				}
 
 				init() {
