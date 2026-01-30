@@ -5,7 +5,6 @@
 这是一个不存在的项目。  
 
 ## 代码块
-```markdown
 ```python
 # 示例Python代码
 def main():
