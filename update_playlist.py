@@ -36,34 +36,40 @@ class PlaylistUpdater:
             print('✗ audios 文件夹不存在！')
             return []
 
-        mp3_files = sorted([f for f in self.audio_dir.iterdir() if f.suffix.lower() == '.mp3'])
+        # 支持的音频格式
+        audio_extensions = {'.mp3', '.flac', '.m4a', '.ogg', '.wav', '.webm'}
+        audio_files = sorted([
+            f for f in self.audio_dir.iterdir()
+            if f.suffix.lower() in audio_extensions
+        ])
 
-        if not mp3_files:
-            print('⚠ audios 文件夹中没有找到 MP3 文件')
+        if not audio_files:
+            print('⚠ audios 文件夹中没有找到支持的音频文件')
+            print('  支持的格式: MP3, FLAC, M4A, OGG, WAV, WEBM')
             return []
 
-        print(f'✓ 找到 {len(mp3_files)} 个音频文件:')
-        for file in mp3_files:
+        print(f'✓ 找到 {len(audio_files)} 个音频文件:')
+        for file in audio_files:
             print(f'  - {file.name}')
 
-        return mp3_files
+        return audio_files
 
-    def generate_playlist_code(self, mp3_files):
+    def generate_playlist_code(self, audio_files):
         """生成音乐列表代码"""
-        if not mp3_files:
+        if not audio_files:
             return ''
 
-        lines = [f"						'audios/{file.name}'" for file in mp3_files]
+        lines = [f"						'audios/{file.name}'" for file in audio_files]
         return ',\n'.join(lines)
 
-    def update_index_html(self, mp3_files):
+    def update_index_html(self, audio_files):
         """更新 index.html"""
         with open(self.index_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
         # 生成新的播放列表代码
         new_playlist = f"""const musicFiles = [
-{self.generate_playlist_code(mp3_files)}
+{self.generate_playlist_code(audio_files)}
 					];"""
 
         # 查找并替换音乐列表
@@ -78,14 +84,14 @@ class PlaylistUpdater:
 
         # 更新播放列表总数显示
         count_pattern = r'this\.playlistInfo\.textContent = `\$\{index \+ 1\} \/ \d+`;'
-        new_count = f'this.playlistInfo.textContent = `${{index + 1}} / {len(mp3_files)}`;'
+        new_count = f'this.playlistInfo.textContent = `${{index + 1}} / {len(audio_files)}`;'
         content = re.sub(count_pattern, new_count, content)
 
         # 写回文件
         with open(self.index_file, 'w', encoding='utf-8') as f:
             f.write(content)
 
-        print(f'✓ index.html 已更新，共 {len(mp3_files)} 首歌曲')
+        print(f'✓ index.html 已更新，共 {len(audio_files)} 首歌曲')
         return True
 
     def run(self):
@@ -96,14 +102,14 @@ class PlaylistUpdater:
         self.create_backup()
 
         # 扫描音频文件
-        mp3_files = self.scan_audio_files()
+        audio_files = self.scan_audio_files()
 
-        if not mp3_files:
+        if not audio_files:
             print('\n没有需要更新的文件')
             return
 
         # 更新 index.html
-        if self.update_index_html(mp3_files):
+        if self.update_index_html(audio_files):
             print('\n✓ 更新完成！')
             print('\n提示：如果出现问题，可以从 backups 文件夹恢复之前的版本')
 

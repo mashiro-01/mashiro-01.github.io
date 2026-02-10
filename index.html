@@ -713,7 +713,8 @@
 					// =====================================================
 					// 音乐播放列表配置
 					// 添加新歌曲时，只需在下面数组中添加文件路径即可
-					// 文件命名格式：'audios/演唱者-歌曲名.mp3'
+					// 支持的格式：mp3, flac, m4a, ogg, wav, webm
+					// 文件命名格式：'audios/演唱者-歌曲名.扩展名'
 					// 系统会自动解析文件名，提取演唱者和歌曲信息
 					// =====================================================
 					const musicFiles = [
@@ -736,8 +737,8 @@
 					// 获取文件名（不包含路径）
 					const filename = filepath.split('/').pop();
 
-					// 移除扩展名
-					const nameWithoutExt = filename.replace(/\.mp3$/i, '');
+					// 移除扩展名（支持多种音频格式）
+					const nameWithoutExt = filename.replace(/\.(mp3|flac|m4a|ogg|wav|webm)$/i, '');
 
 					// 按"-"或" - "分割，前面是演唱者，后面是歌曲名
 					const parts = nameWithoutExt.split(/\s*-\s*/);
@@ -747,7 +748,8 @@
 							title: parts.slice(1).join('-'), // 歌曲名（允许歌曲名中包含"-"）
 							artist: parts[0], // 演唱者
 							src: filepath,
-							// 专辑封面图片路径（与mp3文件同名的jpg/png文件）
+							format: filename.split('.').pop().toLowerCase(), // 音频格式
+							// 专辑封面图片路径（与音频文件同名的jpg/png文件）
 							cover: this.findAlbumCover(filepath)
 						};
 					} else {
@@ -756,6 +758,7 @@
 							title: nameWithoutExt,
 							artist: '未知艺术家',
 							src: filepath,
+							format: filename.split('.').pop().toLowerCase(), // 音频格式
 							cover: this.findAlbumCover(filepath)
 						};
 					}
@@ -763,8 +766,8 @@
 
 				// 查找专辑封面图片
 				findAlbumCover(audioPath) {
-					// 获取音频文件名（不含扩展名）
-					const audioFile = audioPath.split('/').pop().replace(/\.mp3$/i, '');
+					// 获取音频文件名（不含扩展名，支持多种音频格式）
+					const audioFile = audioPath.split('/').pop().replace(/\.(mp3|flac|m4a|ogg|wav|webm)$/i, '');
 
 					// 可能的图片格式
 					const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
